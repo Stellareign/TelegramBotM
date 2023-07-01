@@ -60,16 +60,13 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                         Long chatId = message.chat().id(); // получаем идентификатор чата, к которому относится апдейт
                         String messageText = message.text(); // получаем текст сообщения
                         //*****
-                        boolean delitingTask = false;
                         switch (messageText) {
                             case "/start" -> sendMessege(chatId, """
                                     Привет! Я твой планировщик. Отправь задачу в формате дд.мм.гггг чч:мм Сделать домашку.""");
                             // отправляем заданное сообщение на заданный id чата, """ - текстовый блок);
 
-
                             case "/all" ->
                                     sendMessege(chatId, "Список всех задач:\n" + notificationTaskService.allTasksList().toString());
-
 //                            case "/TaskAtTime" -> {
 //                                sendMessege(chatId, """
 //                                        Введи дату задачи в формате дд.мм.гггг.""");
@@ -82,20 +79,20 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 //                            case "/delete" -> {
 //                                sendMessege(chatId, "Введи Id задачи для удаления:\n" +
 //                                        notificationTaskService.allTasksList().toString());
-//                                delitingTask = true;
+//
 //                                String messageText3 = message.text();
 //                                if (messageText3 != null) {
 //                                    long notificationId = Long.parseLong(messageText3);
+//                                    sendMessege(chatId, "Выполняю удаление задачи..." + messageText3);
 //                                    notificationTaskService.deleteNotificationTask(notificationId);
-//                                } else sendMessege(chatId, "Номер ID задачи указан неверно или такой задачи нет в списке.");
+//                                } else {
+//                                    sendMessege(chatId, "Номер ID задачи указан неверно или такой задачи нет в списке.");
+//                                }
 //                            }
-
-
                             default -> {
                                 if (messageText != null) { // проверяем, не пустой ли текст
                                     saveNotification(chatId, messageText);
                                 }
-
                             }
                         }
                     });
